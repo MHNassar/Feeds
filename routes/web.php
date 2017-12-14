@@ -21,7 +21,8 @@ $router->get('test', function () use ($router) {
 
 });
 $router->get('/', function () use ($router) {
-    return "fff";
+    $users = DB::table('resource_resource')->get();
+    return $users;
 
 });
 
