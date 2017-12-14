@@ -20,5 +20,9 @@ $router->get('test', function () use ($router) {
     return $users;
 
 });
+$router->get('/', function () use ($router) {
+    return "fff";
+
+});
 
 $router->post('login', 'LoginController@login');
