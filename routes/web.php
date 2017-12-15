@@ -16,7 +16,7 @@
 
 $router->get('test', function () use ($router) {
 
-    $users = DB::table('resource_resource')->get();
+    $users = DB::table('hr_employee')->get();
     return $users;
 
 });
@@ -24,7 +24,7 @@ $router->get('/', function () use ($router) {
     try {
         DB::connection()->getPdo();
     } catch (\Exception $e) {
-        echo $e ;
+        echo $e;
     }
 
 });

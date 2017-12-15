@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Worker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,9 +19,11 @@ class LoginController extends Controller
         $password = $request->get('password');
         $checkLogin = DB::table('res_users')->where('login', $login)->where('password', $password)->count();
         if ($checkLogin > 0) {
-            return ['login' => true];
+            $user = Worker::where('work_email', $login)->first();
+            return $user;
         }
-        return ['login' => false];
+
+        return response()->json(['data' => '1', 'message' => 'Invalid Credentials '], 401);
 
     }
 }
