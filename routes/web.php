@@ -16,14 +16,15 @@
 
 $router->get('test', function () use ($router) {
 
-    $users = DB::table('hr_employee')->get();
-    return $users;
+    $tasks = \App\Details::where('id', 27461)->with('client')->first();
+    return $tasks->client;
 
 });
 $router->get('/', function () use ($router) {
-    $users = DB::table('hr_employee')->get();
+    $users = DB::table('project_task')->where('id', 27461)->get();
     return $users;
 
 });
 
 $router->post('login', 'LoginController@login');
+$router->get('tasks/{id}', 'TasksController@getTask');
