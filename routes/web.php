@@ -21,10 +21,11 @@ $router->get('test', function () use ($router) {
 
 });
 $router->get('/', function () use ($router) {
-    $users = DB::table('project_task')->where('id', 27461)->get();
+    $users = \App\State::all();
     return $users;
 
 });
 
 $router->post('login', 'LoginController@login');
 $router->get('tasks/{id}', 'TasksController@getTask');
+$router->get('tasks/stage/{task_id}/{state}', 'TasksController@changeState');

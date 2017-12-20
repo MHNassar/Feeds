@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class Details extends Model
 {
     protected $table = 'project_task';
+    public $timestamps = false;
 
     public function client()
     {
