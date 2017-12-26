@@ -14,14 +14,8 @@
 //use Illuminate\Support\Facades\DB;
 
 
-$router->get('test', function () use ($router) {
-
-    $tasks = \App\Details::where('id', 27461)->with('client')->first();
-    return $tasks->client;
-
-});
 $router->get('/', function () use ($router) {
-    $users = \App\State::all();
+    $users = DB::table('ir_attachment')->limit('1')->get();
     return $users;
 
 });
@@ -29,3 +23,4 @@ $router->get('/', function () use ($router) {
 $router->post('login', 'LoginController@login');
 $router->get('tasks/{id}', 'TasksController@getTask');
 $router->get('tasks/stage/{task_id}/{state}', 'TasksController@changeState');
+$router->post('task/summary', 'TasksController@setOrderSummary');
