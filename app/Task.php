@@ -12,8 +12,7 @@ class Task extends Model
 {
     protected $table = 'account_analytic_line';
 //
-    protected $appends = ['task_name', 'task_time', 'client_name', 'client_address', 'client_phone'];
-
+    protected $appends = ['task_name', 'task_time', 'client_name', 'client_address', 'client_phone', 'stage_id'];
 
 
     protected $hidden = ["id", "create_uid", "user_id", "account_id", "company_id", "write_uid", "amount", "unit_amount",
@@ -28,7 +27,7 @@ class Task extends Model
 
     public function getTaskTimeAttribute()
     {
-        return Carbon::parse($this->date_time)->format('H:i:s');
+        return Carbon::parse($this->date_time)->addMinutes(90)->format('H:i:s');
     }
 
     public function getClientNameAttribute()
@@ -49,6 +48,11 @@ class Task extends Model
         $address = $clients->client->street . '  ' . $clients->client->city . '  ' . $clients->client->street2 . '  ' . $clients->client->x_neighborhood . '  ' . $clients->client->x_Building . '  ' . $clients->client->x_Level_No . '  ' . $clients->client->x_Home_No;
         return $address;
 
+    }
+
+    public function getStageIdAttribute()
+    {
+        return Details::where('id', $this->task_id)->first()->stage_id;
     }
 
 
