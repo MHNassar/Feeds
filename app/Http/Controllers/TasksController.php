@@ -110,7 +110,10 @@ class TasksController extends Controller
         $user_id = $request->get('user_id');
         $long = $request->get('long');
         $lat = $request->get('lat');
-        $att = ['x_worker_id' => $user_id,
+        $id = DB::table('x_workers_location')->max('id');
+        $att = [
+            'id' => $id + 1,
+            'x_worker_id' => $user_id,
             'x_worker_longitude' => $long,
             'x_worker_latitude' => $lat,
             'create_date' => Carbon::now()];
