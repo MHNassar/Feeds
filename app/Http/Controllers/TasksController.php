@@ -104,4 +104,21 @@ class TasksController extends Controller
         }
 
     }
+
+    public function setLocation(Request $request)
+    {
+        $user_id = $request->get('user_id');
+        $long = $request->get('long');
+        $lat = $request->get('lat');
+        $att = ['x_worker_id' => $user_id,
+            'x_worker_longitude' => $long,
+            'x_worker_latitude' => $lat,
+            'create_date' => Carbon::now()];
+
+        DB::table('x_workers_location')->insert([$att]);
+
+        return response()->json(['message' => 'Succsess'], 200);
+
+
+    }
 }

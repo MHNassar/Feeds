@@ -24,3 +24,4 @@ $router->post('login', 'LoginController@login');
 $router->get('tasks/{id}', 'TasksController@getTask');
 $router->get('tasks/stage/{task_id}/{state}', 'TasksController@changeState');
 $router->post('task/summary', 'TasksController@setOrderSummary');
+$router->post('user/location', 'TasksController@setLocation');
