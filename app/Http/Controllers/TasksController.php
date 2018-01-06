@@ -36,8 +36,26 @@ class TasksController extends Controller
         }
         $task = Details::find($task_id);
         if ($task) {
+            $oldStage = $task->stage_id;
             $task->stage_id = $stateId;
             $task->save();
+
+            $mailId = DB::table('mail_message')->where('res_id', $task_id)->first()->id;
+            $id = DB::table('mail_tracking_value')->max('id');
+            $lastTrack = DB::table('mail_tracking_value')->where('mail_message_id', $mailId)->orderBy('id', 'desc')->first();
+            $user_id = $lastTrack->create_uid;
+            $old_value_char = $lastTrack->new_value_char;
+            $old_value_int = $lastTrack->new_value_integer;
+            DB::table('mail_tracking_value')->insert([
+                "id" => $id + 1,
+                "mail_message_id" => $mailId,
+                'create_uid' => $user_id, 'field_type' => 'many2one',
+                'create_date' => Carbon::now(), 'field' => 'stage_id', 'field_desc' => 'Stage',
+                'new_value_char' => $state, 'write_date' => Carbon::now(), 'new_value_integer' => $stateId,
+                'old_value_char' => $old_value_char, 'old_value_integer' => $old_value_int
+            ]);
+
+
             return response()->json(['message' => 'Succsess'], 200);
         }
         return response()->json(['message' => 'Bad Request - Task Not Found'], 400);
