@@ -11,10 +11,18 @@ class Details extends Model
 {
     protected $table = 'project_task';
     public $timestamps = false;
+    protected $appends = ['cl_id'];
 
     public function client()
     {
         return $this->hasOne(Clients::class, 'id', 'partner_id');
     }
+
+    public function getClIdAttribute()
+    {
+        return Task::where('task_id', $this->id)->first()->x_name;
+
+    }
+
 
 }
