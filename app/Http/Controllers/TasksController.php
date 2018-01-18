@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Details;
 use App\State;
 use App\Task;
+use App\Worker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,8 @@ class TasksController extends Controller
 
             //track .....
             // Get partner_id
-            $partner_id = DB::table('res_users')->where('login', $task->cl_id)->first()->partner_id;
+            $userMail = Worker::find($task->cl_id)->email;
+            $partner_id = DB::table('res_users')->where('login', $userMail)->first()->partner_id;
             $mailId = DB::table('mail_message')->insert(['create_date' => Carbon::now(), 'write_date' => Carbon::now(), 'write_id' => 1
                 , 'create_id' => 1, 'subtype_id' => 18, 'res_id' => $task_id, 'author_id' => $partner_id, 'model' => 'project.task', 'no_auto_thread' => 0
                 , 'date' => Carbon::now(), 'message_type' => 'notification', 'website_published' => 1
