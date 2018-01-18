@@ -51,7 +51,7 @@ class TasksController extends Controller
             $mailId = DB::table('mail_message')->max('id');
 
             $lastTrack = DB::table('mail_tracking_value')->where('mail_message_id', $mailId + 1)->orderBy('id', 'desc')->first();
-            $user_id = $lastTrack->create_uid;
+            $user_id = $task->cl_id;
             $old_value_char = $lastTrack->new_value_char;
             $old_value_int = $lastTrack->new_value_integer;
             DB::table('mail_tracking_value')->insert([
